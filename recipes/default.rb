@@ -18,15 +18,9 @@
 #
 
 # install rvm api gem during chef compile phase
-Chef::Log.info("checking for Opsworks: #{OpsWorks} and internal gems: #{OpsWorks::InternalGems}")
-if defined?(OpsWorks) && defined?(OpsWorks::InternalGems)
-  Chef::Log.info("They're defined! chef internal rvm gem version: #{node['rvm']['chef_internal_rvm_gem_version']}")
-  OpsWorks::InternalGems.internal_gem_package('rvm', :version => node['rvm']['chef_internal_rvm_gem_version'])
-else
-  chef_gem 'rvm' do
-    action :install
-    version '>= 1.11.3.6'
-  end
+chef_gem 'rvm' do
+  action :install
+  version '>= 1.11.3.6'
 end
 
 ruby_block "require rvm" do
